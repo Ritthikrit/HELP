@@ -1,30 +1,18 @@
-import { NextRequest, NextResponse } from "next/server";
-import { updateSession } from "./utils/loginUser";
+// middleware.ts
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
+// เลือกหน้าที่ "ต้อง Login" ถึงจะเข้าได้
+const isProtectedRoute = createRouteMatcher([
+  '/students/editStudent(.*)', // ป้องกันหน้า Edit ทั้งหมด
+]);
 
-export default async function proxy(request: NextRequest) {
-   console.log("Proxy invoked")
-   const res = await updateSession(request)
+export default clerkMiddleware(async (auth, req) => {
+  if (isProtectedRoute(req)) await auth.protect(); // ถ้าไม่ใช่สมาชิก ให้เด้งไปหน้า Login
+});
 
-
-   // Allow Server Actions (POST requests) to pass through
-   if (request.method === "POST") {
-       return NextResponse.next()
-   }
-
-
-   if (res)
-       return res
-   else
-       return NextResponse.redirect(new URL("/students/login", request.url))
-}
-
-
-// if path matches with matcher config, then it invoke middleware(request)
 export const config = {
-   // matcher: '/students/editStudent/:path*',
-   matcher: [
-       "/students/editStudent",   // page only
-       "/students/editStudent/(.*)" // optional
-   ]
-}
+  matcher: [
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    '/(api|trpc)(.*)',
+  ],
+};

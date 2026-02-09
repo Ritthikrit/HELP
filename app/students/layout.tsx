@@ -1,31 +1,36 @@
 // app/students/layout.tsx
 import Link from "next/link";
 import { STYLE } from "@/constants/type";
-import Logout from "./LogoutButton";
-import Login from "./LoginButton";
+import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
-export default function Layout({
-    children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+export default function Layout({ children }: { children: React.ReactNode }) {
     return (
-        <div>
-            <nav className="mx-8 p-4 flex gap-4 items-center"> {/* เพิ่ม flex gap เพื่อความสวยงาม */}
-                <Link className={STYLE} href="/students/">Home</Link>
+        <ClerkProvider>
+            <div>
+                <nav className="mx-8 p-4 flex gap-4 items-center border-b">
+                    <Link className={STYLE} href="/students/">Home</Link>
+                    <Link className={STYLE} href="/students/todo">Todo List</Link>
+                    <Link className={STYLE} href="/students/editStudent">Edit</Link>
+                    
+                    {/* ส่วนจัดการการเข้าสู่ระบบของ Clerk */}
+                    <div className="ml-auto flex gap-4">
+                        <SignedOut>
+                            {/* ถ้ายังไม่ Login ให้โชว์ปุ่มนี้ */}
+                            <SignInButton mode="modal">
+                                <button className="bg-blue-600 text-white px-4 py-2 rounded-md">
+                                    Login with Google
+                                </button>
+                            </SignInButton>
+                        </SignedOut>
 
-                {/* เพิ่มเมนู Todo ตรงนี้ */}
-                <Link className={STYLE} href="/students/todo">Todo List</Link>
-
-                <Link className={STYLE} href="/students/register">Register</Link>
-                <Link className={STYLE} href="/students/editStudent">Edit</Link>
-                <Link className={STYLE} href="/students/check">Check</Link>
-                <Login />
-                <Logout />
-            </nav>
-
-            {/* เนื้อหาหน้า Todo จะมาโผล่ที่ children ตรงนี้อัตโนมัติ */}
-            {children}
-        </div>
+                        <SignedIn>
+                            {/* ถ้า Login แล้ว ให้โชว์รูปโปรไฟล์และปุ่ม Logout */}
+                            <UserButton showName />
+                        </SignedIn>
+                    </div>
+                </nav>
+                <main className="p-4">{children}</main>
+            </div>
+        </ClerkProvider>
     );
 }
