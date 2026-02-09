@@ -1,15 +1,17 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getSession } from "@/utils/loginUser"
 
-export default async function EditPage() {
-    const { userId } = await auth();
-    const user = await currentUser();
 
-    if (!userId) return <div>กรุณาเข้าสู่ระบบ</div>;
+export default async function CheckToken() {
+   let session;
+   try {
+       session = await getSession()
+       console.log("Session: ", session)
+   }
+   catch (e) {
+       console.log("Error: ", e)
+       session = null
+   }
 
-    return (
-        <div>
-            <h1>สวัสดีคุณ {user?.firstName}</h1>
-            {/* โค้ดหน้าแก้ไขของคุณ */}
-        </div>
-    );
+
+   return <div> {JSON.stringify(session)} </div>
 }

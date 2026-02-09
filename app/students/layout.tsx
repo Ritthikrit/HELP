@@ -6,12 +6,22 @@ import { ClerkProvider, SignInButton, SignedIn, SignedOut, UserButton } from "@c
 export default function Layout({ children }: { children: React.ReactNode }) {
     return (
         <ClerkProvider>
+
+
+            {/* เพิ่มเมนู Todo ตรงนี้ */}
+
+
             <div>
                 <nav className="mx-8 p-4 flex gap-4 items-center border-b">
                     <Link className={STYLE} href="/students/">Home</Link>
                     <Link className={STYLE} href="/students/todo">Todo List</Link>
                     <Link className={STYLE} href="/students/editStudent">Edit</Link>
-                    
+                    <Link className={STYLE} href="/students/register">Register</Link>
+                    <Link className={STYLE} href="/students/check">Check</Link>
+
+
+
+
                     {/* ส่วนจัดการการเข้าสู่ระบบของ Clerk */}
                     <div className="ml-auto flex gap-4">
                         <SignedOut>
