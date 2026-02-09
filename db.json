@@ -47,5 +47,31 @@
       "email": "awawd@gmail.com",
       "password": "TeclzQCpXTCFRfs/a3i2qgEfMMwAcoh6al+HXS6Q1qjNwOJ38awc5/XL6QWcyIsRLDPy7qE/vWjJLgM6EoapDw=="
     }
+  ],
+  "todos": [
+    {
+      "id": "scis",
+      "task": "Play pingpong เทสๆ",
+      "time": 30,
+      "isDone": true
+    },
+    {
+      "id": "sdfe",
+      "task": "Swimming at pool Hi",
+      "time": 60,
+      "isDone": false
+    },
+    {
+      "id": "sfde",
+      "task": "Write this easy homework",
+      "time": 130,
+      "isDone": false
+    },
+    {
+      "id": "b841",
+      "task": "Do homework",
+      "time": 100,
+      "isDone": false
+    }
   ]
 }
