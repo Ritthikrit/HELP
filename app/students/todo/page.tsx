@@ -87,8 +87,8 @@ export default function TodosPage() {
     }
 
     return (
-        <main className="flex justify-center items-center min-h-screen bg-white">
-            <div className="bg-amber-50 p-10 md:p-20 rounded-2xl shadow-sm w-full max-w-2xl">
+        <main className="flex justify-center border items-center min-h-screen">
+            <div className=" p-10 md:p-20 rounded-2xl w-full max-w-2xl">
                 <h1 className="text-3xl font-bold mb-6 text-amber-900 border-b pb-2">My Todo List</h1>
 
                 {/* List of Todos */}
